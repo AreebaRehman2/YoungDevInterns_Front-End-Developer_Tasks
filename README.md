@@ -1,0 +1,1 @@
+Welcome to my repository, where I showcase the tasks and projects completed during my internship as a frontend developer. This collection includes code samples, projects, and documentation that demonstrate my skills and contributions to web development.
