@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Sign-Up Form</title>
+  <style>
+    /* General body styling with gradient */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* Form container with shadow and rounded corners */
+    form {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* Hover effect for form */
+    form:hover {
+      transform: scale(1.02);
+    }
+
+    /* Header styling */
+    h1 {
+      text-align: center;
+      color: #2575fc;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+
+    /* Form group spacing */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Label styling */
+    label {
+      font-size: 0.95em;
+      font-weight: bold;
+      color: #6a6a6a;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* Input fields */
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f8f9fc;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    /* Input focus effect */
+    input:focus {
+      border-color: #2575fc;
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(37, 117, 252, 0.3);
+    }
+
+    /* Error message styling */
+    .error {
+      font-size: 0.85em;
+      color: #d9534f;
+      margin-top: 5px;
+    }
+
+    /* Password visibility section */
+    .show-password {
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+      color: #6c757d;
+    }
+
+    .show-password input[type="checkbox"] {
+      margin-right: 10px;
+      width: auto;
+    }
+
+    /* Button styling */
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      font-weight: bold;
+      color: #ffffff;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    /* Button hover effect */
+    button:hover {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 5px 10px rgba(37, 117, 252, 0.4);
+    }
+
+   /* Responsive design */
+   @media (max-width: 768px) {
+      form {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      input {
+        padding: 10px;
+        font-size: 0.9em;
+      }
+
+      button {
+        padding: 10px;
+        font-size: 0.9em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+
+      form {
+        padding: 15px;
+        border-radius: 10px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+      }
+
+      input {
+        padding: 8px;
+        font-size: 0.85em;
+      }
+
+      button {
+        padding: 8px;
+        font-size: 0.85em;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form id="signupForm" onsubmit="return validateForm()">
+    <h1>Create An Account</h1>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <div id="usernameError" class="error"></div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <div id="emailError" class="error"></div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password (min 6 characters):</label>
+      <input type="password" id="password" name="password">
+      <div id="passwordError" class="error"></div>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+      <div id="confirmPasswordError" class="error"></div>
+    </div>
+    <div class="form-group show-password">
+      <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
+      <label for="showPassword">Show Passwords</label>
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      document.getElementById("usernameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+      document.getElementById("confirmPasswordError").textContent = "";
+
+      if (username.length < 3) {
+        document.getElementById("usernameError").textContent = "Username must be at least 3 characters long.";
+        isValid = false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById("emailError").textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/;
+      if (!passwordRegex.test(password)) {
+        document.getElementById("passwordError").textContent =
+          "Password must include at least one uppercase, one lowercase, one number, and one special character.";
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById("password");
+      const confirmPasswordField = document.getElementById("confirmPassword");
+      const showPasswordCheckbox = document.getElementById("showPassword");
+
+      const type = showPasswordCheckbox.checked ? "text" : "password";
+      passwordField.type = type;
+      confirmPasswordField.type = type;
+    }
+  </script>
+</body>
+</html>
